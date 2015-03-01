@@ -4,7 +4,7 @@ var Cylon = require('cylon');
 
 var SERVO_BEGIN_POSITIONS = [245,245,235,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //All servo's on 0;
 var servoPositions = [];
-var MAX_DEGREES_PER_SECOND = 180;
+var MAX_DEGREES_PER_SECOND = 160;
 var SERVOS_IN_USE = 4
 
 Cylon.robot({
@@ -49,7 +49,6 @@ Cylon.robot({
     // we'll to listen to in the client
     var servoBoard = this.devices.dsscx18s;
     init_servos( servoBoard );
-    console.log("servo's inited");
     //this.turnOn();
     /*after((2).seconds(), function() {
       this.turnOn();
@@ -77,6 +76,7 @@ Cylon.robot({
     //} else {
     //  this.emit('turned_off');
     //}
+    this.emit('turned_off');
   },
   servoPosition: function(){
     //return servo position here
@@ -100,13 +100,13 @@ var actuate_servo = function(myServoBoard, servoPin, newPosition){
 
   var oldPosition = servoPositions[ ((servoPin-1)) ];
   var steps = newPosition > oldPosition ? Math.ceil( (( (newPosition-oldPosition)/ MAX_DEGREES_PER_SECOND )) ) : Math.ceil( (( (oldPosition-newPosition)/ MAX_DEGREES_PER_SECOND )) );
-  var steps = 100*steps; //interpolation
+  var steps = 20*steps; //interpolation
   var doOnce = true;
 
   console.log("Actuating servo "+ servoPin +" in " + steps + " steps.");
 
   var index = 0;
-  every((.01).second(), function(){
+  every((.05).second(), function(){
     var newFrame = index+1;
     if( newFrame <= steps){
       var startPos = oldPosition;
@@ -130,7 +130,7 @@ Cylon.api(
   'socketio',
   {
   host: '0.0.0.0',
-  port: '3000'
+  port: '3001'
 });
 
 /* POSITION FUNCTIONS */
