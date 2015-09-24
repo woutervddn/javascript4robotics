@@ -37,7 +37,7 @@ or running:
 There are other libraries than cylon.js. We might end up using more than one of them. Some possibilities are:
 
 - [NodeBots](http://nodebots.io/)
-- [Johny Five](http://johnny-five.io/)
+- [Johnny Five](http://johnny-five.io/)
 
 
 
