@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "4.13.3",
-    "cylon": "1.2.0"
+    "cylon": "1.2.0",
+    "cylon-firmata": "0.23.0"
   }
 }
 

@@ -5,6 +5,17 @@ This repo is the codebase for the **Javascript4Robotics** project. **Javascript3
 - Have Node.js installed on either a Raspberry Pi, Arduino Yun or a PC with an Arduino connected to it.
 - Have npm installed
 
+## Ubuntu requirements
+Following extra requirements where necessary to get this code running on Ubuntu. We're not sure if these applications are necessary on other Operating Systems.
+
+We installed following application in order to get **cylon-firmata**'s **serialport** running:
+- build-essential
+- node legacy
+
+Install both of these on Ubuntu using the following command:
+
+    sudo apt-get install build-essential node-legacy
+
 
 # Installation
 For now the whole project is fairly vanilla, installing the required modules is as simple as running `npm install` from inside the `/src/` directory.
