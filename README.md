@@ -7,16 +7,16 @@ This repo is the codebase for the **Javascript4Robotics** project. **Javascript3
 
 
 # Installation
-For now the whole project is fairly vanilla, installing the required modules is as simple as running `npm install` from inside the main directory.
+For now the whole project is fairly vanilla, installing the required modules is as simple as running `npm install` from inside the `/src/` directory.
 
 # Running the code
 You can run our code by launching your node.js server. Do this by running either:
 
-    node /folderPath/app.js
+    node /folderPath/src/app.js
 
 or running:
 
-    nodejs /folderPath/app.js
+    nodejs /folderPath/src/app.js
 
 
 **Whether your computer uses the `node` or `nodejs`command depends on your operating system.**
