@@ -1,0 +1,16 @@
+{
+  "name": "Javascript4Robotics",
+  "version": "0.0.1",
+  "description": "A node project for controlling a robotic arm from any webclient using javascript.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stef Paquay, Steven Stakenborg, Wouter Vandenneucker",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.13.3",
+    "cylon": "1.2.0"
+  }
+}
+
