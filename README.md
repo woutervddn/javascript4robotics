@@ -31,3 +31,15 @@ or running:
 
 
 **Whether your computer uses the `node` or `nodejs`command depends on your operating system.**
+
+
+# Other JS4R libraries
+There are other libraries than cylon.js. We might end up using more than one of them. Some possibilities are:
+
+- [NodeBots](http://nodebots.io/)
+- [Johny Five](http://johnny-five.io/)
+
+
+
+# Other crazy projects
+- [A bull fighting javascript quad copter](https://github.com/substack/matador-copter)
