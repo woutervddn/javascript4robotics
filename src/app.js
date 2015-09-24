@@ -10,6 +10,6 @@ Cylon.robot({
   },
 
   work: function(my) {
-    every((1).second(), my.led.toggle);
+    every((3).second(), my.led.toggle);
   }
 }).start();
