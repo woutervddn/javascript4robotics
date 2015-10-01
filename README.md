@@ -10,11 +10,11 @@ Following extra requirements where necessary to get this code running on Ubuntu.
 
 We installed following application in order to get **cylon-firmata**'s **serialport** running:
 - build-essential
-- node legacy
+- nodejs legacy
 
 Install both of these on Ubuntu using the following command:
 
-    sudo apt-get install build-essential node-legacy
+    sudo apt-get install build-essential nodejs-legacy
 
 
 # Installation
