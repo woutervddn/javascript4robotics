@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ## Install dependencies
+apt-get update
 apt-get install nodejs npm build-essential nodejs-legacy
 
 ## Install application
