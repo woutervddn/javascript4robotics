@@ -3,6 +3,8 @@
 var Cylon = require('cylon');
 
 Cylon.robot({
+  name: 'arm',
+
   connections: {
     arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' }
   },
@@ -89,6 +91,16 @@ var actuate_servo = function(servoBoard, servoPin, newPosition){
     }
   });
 }
+
+// We setup the api specifying `socketio`
+// as the preffered plugin
+Cylon.api(
+  'socketio',
+  {
+  host: '0.0.0.0',
+  port: '3000'
+});
+
 
 
 /* POSITION FUNCTIONS */
