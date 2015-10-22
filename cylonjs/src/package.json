@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "4.13.3",
+    "serialport": "2.0.1",
     "cylon": "1.2.0",
     "cylon-firmata": "0.23.0",
     "cylon-gpio": "0.27.0",
