@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Javascript 4 Robotics Webclient</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="jumbotron">
+            <h1>Hello, world!</h1>
+            <p>Use the sliders below to control the connected robot</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 generalControl text-center">
+          <form class="form" id="servoForm">
+            <div class="form-group">
+              <label for="servos">Number Of Servos:</label><br/>
+              <input type="number" class="form-control" id="servos" placeholder="0" value="1" min="1" max="18">
+            </div>
+            <div class="form-group">
+              <label for="api-url">Robot API Server URL:</label><br/>
+              <input type="url" class="form-control" id="apiUrl" value="http://localhost/js4r/">
+            </div>
+            <br/><br/>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+          </form>
+        </div>
+      </div>
+      <hr/>
+      <div class="servoControls">
+        <div class="row aServoControl text-center" style="margin-bottom: 30px">
+          <div class="col-md-6">
+            Servo <span class="servoNo">1</span>
+          </div>
+          <div class="col-md-6">
+            <input class="slider" data-slider-id='1' type="text" data-slider-min="0" data-slider-max="180" data-slider-step="1" data-slider-value="0"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>
