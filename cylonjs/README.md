@@ -22,11 +22,11 @@ For now the whole project is fairly vanilla, installing the required modules is 
 ## Running the code
 You can run our code by launching your node.js server. Do this by running either:
 
-    node /folderPath/src/app.js
+    node /folderPath/bin/app.js
 
 or running:
 
-    nodejs /folderPath/src/app.js
+    nodejs /folderPath/bin/app.js
 
 
 **Whether your computer uses the `node` or `nodejs`command depends on your operating system.**
