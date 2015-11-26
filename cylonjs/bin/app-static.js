@@ -3,24 +3,7 @@
 var Cylon = require('cylon');
 
 Cylon.robot({
-  name: 'robotArm',
-
-  // This is how we define custom events that will be registered
-  // by the API.
-  events: ['servo_positions', 'turned_off', 'turned_on'],
-
-  // These are the commands that will be availble in the API
-  // Commands method needs to return an object with the aliases
-  // to the robot methods.
-  commands: function() {
-    return {
-      actuate_servo: this.actuateServo,
-      servo_position: this.servoPosition,
-      turn_on: this.turnOn,
-      turn_off: this.turnOff,
-      toggle: this.toggle
-    };
-  },
+  name: 'arm',
 
   connections: {
     arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' }
@@ -31,52 +14,48 @@ Cylon.robot({
     dsscx18s: { driver: "dsscx18s" }
   },
 
-  actuateServo: function(my){
+  work: function(my) {
     var servoBoard = my.dsscx18s;
-    actuate_servo(servoBoard, 1, 153);
-  },
+    every((1).second(), my.led.toggle);
+    init_servos(my.dsscx18s);
+    var interval = 3;
 
-  servoPosition: function(my){
-    //return servo position here
-    //var json = JSON.stringify( servoPositions )
-    //this.emit( json );
-    //var json = JSON.stringify( "tst" );
-    this.emit( "servo_positions" );
-  },
-
-   work: function() {
-    // We setup two time outs to turn on
-    // and turn off the led device.
-    // this will trigger an event that
-    // we'll to listen to in the client
-    after((2).seconds(), function() {
-      this.turnOn();
-    }.bind(this));
-
-    after((5).seconds(), function() {
-      this.turnOff();
-    }.bind(this));
-  },
-
-  turnOn: function() {
-    this.led.turnOn();
-    this.emit('turned_on');
-  },
-
-  turnOff: function() {
-    this.led.turnOff();
-    this.emit('turned_off');
-  },
-
-  toggle: function() {
-    this.led.toggle();
-    if (this.led.isOn()) {
-      this.emit('turned_on');
-    } else {
-      this.emit('turned_off');
-    }
+    after((1.5).seconds(), function() {
+      //do stuff
+      straight_up(my.dsscx18s, false);
+      //actuate_servo(my.dsscx18s, 4, 255);
+    });
+    after((5+interval).seconds(), function() {
+      //do stuff
+      actuate_servo(servoBoard, 1, 153);
+      actuate_servo(servoBoard, 2, 120);
+      actuate_servo(servoBoard, 3, 150);
+    });
+    after((7+interval).seconds(), function() {
+      //do stuff
+      actuate_servo(servoBoard, 1, 170);
+      actuate_servo(servoBoard, 2, 160);
+      actuate_servo(servoBoard, 3, 170);
+    });
+    after((10+interval).seconds(), function() {
+      //do stuff
+      actuate_servo(servoBoard, 1, 200);
+      actuate_servo(servoBoard, 2, 230);
+      actuate_servo(servoBoard, 3, 200);
+    });
+    after((12+interval).seconds(), function() {
+      //do stuff
+      actuate_servo(servoBoard, 4, 30);
+    });
+    after((15+interval).seconds(), function() {
+      //do stuff
+      actuate_servo(servoBoard, 4, 200);
+    });
+    after((18+interval).seconds(), function() {
+      stop_pos(my.dsscx18s);
+    });
   }
-}); //.start();
+}).start();
 
 var SERVO_BEGIN_POSITIONS = [245,245,235,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //All servo's on 0;
 var servoPositions = [];
@@ -122,7 +101,6 @@ Cylon.api(
   port: '3000'
 });
 
-Cylon.start();
 
 
 /* POSITION FUNCTIONS */

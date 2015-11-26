@@ -9,6 +9,11 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+    <style>
+      .servoControls{
+        display: none;
+      }
+    </style>
     
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,7 +42,7 @@
             </div>
             <div class="form-group">
               <label for="api-url">Robot API Server URL:</label><br/>
-              <input type="url" class="form-control" id="apiUrl" value="http://localhost/js4r/">
+              <input type="url" class="form-control" id="apiUrl" value="http://127.0.0.1:3000/api/robots/robotArm">
             </div>
             <br/><br/>
             <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
@@ -51,13 +56,13 @@
             Servo <span class="servoNo">1</span>
           </div>
           <div class="col-md-6">
-            <input class="slider" data-slider-id='1' type="text" data-slider-min="0" data-slider-max="180" data-slider-step="1" data-slider-value="0"/>
+            <input class="slider" data-slider-id='1' type="text" data-slider-min="1" data-slider-max="255" data-slider-step="1" data-slider-value="0"/>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="js/socket.io-1.2.0.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

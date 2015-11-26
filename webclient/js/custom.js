@@ -1,19 +1,47 @@
+var DEBUG = true;
+
 var sliderTemplate = "";
 var apiURL = "";
-$(window).load(function(){
-	// With JQuery
-	$('input.slider[data-slider-id="1"]').slider({
-		formatter: function(value) {
-			return 'Current value: ' + value;
-		}
-	});
+var robot;
+var test = null;
+var servoPositions = [];
 
-	getServoPositions();
-	
+/*
+$(document).ready(function(){
+
+  apiURL = "http://127.0.0.1:3000/api/robots/robotArm";
+
+  // We connect to the 'chappie' robot using its namespace(nsp)
+  robot = io(apiURL);
+
+  // Listen to the 'message' event on the robot
+  //robot.on('message', function(msg) {
+  //  $('#messages').append($('<li>').text(msg.name));
+    //console.log(msg);
+  //});
+
+  robot.on('servo_positions', function(data){
+    console.log('servo position triggered:');
+    data = JSON.parse(data);
+    console.log(data);
+  });
+
+  robot.on('actuate_servo', function(data){
+    console.log('actuate:');
+    console.log(data);
+  });
+
+  robot.emit("servo_position");
+  return false;
 });
 
+*/
 
 $(document).ready(function(){
+	$("#apiUrl").val("http://" + window.location.hostname + ":3000/api/robots/robotArm");
+});
+
+$(window).load(function(){
 
 	sliderTemplate = $('.aServoControl').clone();
 
@@ -39,21 +67,94 @@ $(document).ready(function(){
 					sliderTemplate.clone().appendTo('.servoControls')
 					$('.aServoControl:last').find("input.slider").attr("data-slider-id", newSliderId);
 					$('.aServoControl:last').find(".servoNo").html(newSliderId);
-					$('input.slider[data-slider-id="'+newSliderId+'"]').slider({formatter: function(value) {return 'Current value: ' + value;}});
+					//$('input.slider[data-slider-id="'+newSliderId+'"]').slider({formatter: function(value) {return 'Current value: ' + value;}});
 				}
 			}
 
 		}
 
+		$(".generalControl").slideUp();
+		init_slider();
+		init_robot();
 		getServoPositions();
 	});
 });
 
-function getServoPositions(){
-	$(".aServoControl input.slider").each(function(key, el){
-		$.getJSON( "ajax/test.json", function( data ) {
-		  console.log(data);
-		  //el.slider('setValue', newValue);
+function init_slider(){
+
+
+	$('input.slider').each(function(){
+		//Format sliders
+		$(this).slider({
+			formatter: function(value) {
+				return 'Current value: ' + value;
+			},
 		});
-	})
+
+		//listen for slider change
+		$(this).slider().on('slideStop', function(ev){
+			//robot.emit()
+			pin = $(this).attr("data-slider-id");
+			val = $(this).val();
+			robot.emit("actuate_servo", pin, val);
+
+			if ( DEBUG ){
+				console.log("move slider " + pin + " from value " + servoPositions[pin-1] + " to value: " + val);
+			} 
+			servoPositions[pin-1] = val;
+		});
+	});
+
+
+
+
+	$(".servoControls").slideDown();
+}
+
+function init_robot(){
+	// We connect to the 'chappie' robot using its namespace(nsp)
+	robot = io(apiURL);
+
+	// Listen to the 'message' event on the robot
+	//robot.on('message', function(msg) {
+	//  $('#messages').append($('<li>').text(msg.name));
+	//console.log(msg);
+	//});
+
+	robot.on('servo_positions', function(data){
+		if ( DEBUG ){
+			console.log("init robot servo positions: " + data);
+		}
+
+		test = data;
+		var parsedPositions = JSON.parse(data);
+		servoPositions = parsedPositions;
+
+		if ( DEBUG ){
+			console.log("init robot servo positions: " + servoPositions);
+		}
+
+		$('input.slider').each(function(key){
+			//Set default values
+			$(this).slider('setValue', servoPositions[key]);
+		});
+
+		if( DEBUG ){
+			console.log('servo position triggered:');
+			console.log(data);
+		}
+	});
+
+	robot.on('actuate_servo', function(data){
+		if( DEBUG ){
+			console.log('actuate: ' + data);
+		}
+	});
+
+	robot.emit("servo_position");
+	return false;
+}
+
+function getServoPositions(){
+	robot.emit("servo_position");
 }

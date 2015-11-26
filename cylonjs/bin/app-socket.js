@@ -2,12 +2,17 @@
 
 var Cylon = require('cylon');
 
+var SERVO_BEGIN_POSITIONS = [245,245,235,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //All servo's on 0;
+var servoPositions = [];
+var MAX_DEGREES_PER_SECOND = 180;
+var SERVOS_IN_USE = 4
+
 Cylon.robot({
   name: 'robotArm',
 
   // This is how we define custom events that will be registered
   // by the API.
-  events: ['servo_positions', 'turned_off', 'turned_on'],
+  events: ['servo_positions', 'turned_off', 'turned_on', 'actuate_servo'],
 
   // These are the commands that will be availble in the API
   // Commands method needs to return an object with the aliases
@@ -31,17 +36,10 @@ Cylon.robot({
     dsscx18s: { driver: "dsscx18s" }
   },
 
-  actuateServo: function(my){
-    var servoBoard = my.dsscx18s;
-    actuate_servo(servoBoard, 1, 153);
-  },
-
-  servoPosition: function(my){
-    //return servo position here
-    //var json = JSON.stringify( servoPositions )
-    //this.emit( json );
-    //var json = JSON.stringify( "tst" );
-    this.emit( "servo_positions" );
+  actuateServo: function(pin, val){
+    var servoBoard = this.dsscx18s;
+    actuate_servo(servoBoard, pin, val);
+    this.emit("actuate_servo", "{actuating: { {pin:"+pin+"},{from:"+servoPositions[pin-1]+"}, {to:"+val+"}}}");
   },
 
    work: function() {
@@ -49,13 +47,16 @@ Cylon.robot({
     // and turn off the led device.
     // this will trigger an event that
     // we'll to listen to in the client
-    after((2).seconds(), function() {
+    var servoBoard = this.dsscx18s;
+    init_servos( servoBoard );
+    //this.turnOn();
+    /*after((2).seconds(), function() {
       this.turnOn();
     }.bind(this));
 
     after((5).seconds(), function() {
       this.turnOff();
-    }.bind(this));
+    }.bind(this));**/
   },
 
   turnOn: function() {
@@ -75,13 +76,22 @@ Cylon.robot({
     } else {
       this.emit('turned_off');
     }
+  },
+  servoPosition: function(){
+    //return servo position here
+    if( servoPositions.length == 0 ) {
+      servoPositions= SERVO_BEGIN_POSITIONS.slice();
+    }
+
+    console.log(servoPositions);
+
+    var json = JSON.stringify( servoPositions );
+    this.emit( "servo_positions", json );
+    //var json = JSON.stringify( "tst" );
+    //this.emit( servoPositions );
   }
 }); //.start();
 
-var SERVO_BEGIN_POSITIONS = [245,245,235,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //All servo's on 0;
-var servoPositions = [];
-var MAX_DEGREES_PER_SECOND = 180;
-var SERVOS_IN_USE = 4
 
 var actuate_servo = function(servoBoard, servoPin, newPosition){
   var actuate = true;
@@ -108,7 +118,7 @@ var actuate_servo = function(servoBoard, servoPin, newPosition){
       index++;
     } else if(doOnce == true) {
       doOnce = false;
-      servoPositions[ ((servoPin-1)) ] = newPosition;
+      servoPositions[ ((servoPin-1)) ] = parseInt( newPosition );
     }
   });
 }
@@ -127,11 +137,16 @@ Cylon.start();
 
 /* POSITION FUNCTIONS */
 var init_servos = function(servoBoard){
-  for (var i = 0; i < SERVO_BEGIN_POSITIONS.length; ++i) {
+  console.log("initing servo positions...");
+
+  if( servoPositions.length == 0 ) {
+    servoPositions= SERVO_BEGIN_POSITIONS.slice();
+  }
+
+  for (var i = 0; i < servoPositions.length; ++i) {
     var callback = function(){ return 0; }
-    servoBoard.servo_go_to_pos(i+1, SERVO_BEGIN_POSITIONS[i], true, callback);
-    servoPositions[i] = SERVO_BEGIN_POSITIONS[i];
-    console.log("servo " + i + " set to position 0");
+    servoBoard.servo_go_to_pos(i+1, servoPositions[i], true, callback);
+    console.log("servo " + i + " set to start position ("+servoPositions[i]+")");
   }
 }
 
