@@ -1,6 +1,6 @@
 {
   "name": "Javascript4Robotics",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A node project for controlling a robotic arm from any webclient using javascript.",
   "main": "app-socket.js",
   "scripts": {

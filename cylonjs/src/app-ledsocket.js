@@ -28,20 +28,6 @@ Cylon.robot({
     led: { driver: 'led', pin: 13 }
   },
 
-  work: function() {
-    // We setup two time outs to turn on
-    // and turn off the led device.
-    // this will trigger an event that
-    // we'll to listen to in the client
-    after((2).seconds(), function() {
-      this.turnOn();
-    }.bind(this));
-
-    after((5).seconds(), function() {
-      this.turnOff();
-    }.bind(this));
-  },
-
   turnOn: function() {
     this.led.turnOn();
     this.emit('turned_on');
@@ -59,7 +45,23 @@ Cylon.robot({
     } else {
       this.emit('turned_off');
     }
-  }
+  },
+
+  work: function() {
+    // We setup two time outs to turn on
+    // and turn off the led device.
+    // this will trigger an event that
+    // we'll to listen to in the client
+    
+    /*after((2).seconds(), function() {
+      this.turnOn();
+    }.bind(this));
+
+    after((5).seconds(), function() {
+      this.turnOff();
+    }.bind(this));*/
+  },
+
 });
 
 Cylon.api(
