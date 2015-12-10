@@ -28,11 +28,11 @@ Cylon.robot({
   },
 
   connections: {
-    arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' }
+    beaglebone: { adaptor: 'beaglebone' } 
   },
 
   devices: {
-    led: { driver: 'led', pin: 13 },
+    //led: { driver: 'led', pin: 13 },
     dsscx18s: { driver: "dsscx18s" }
   },
 
@@ -49,6 +49,7 @@ Cylon.robot({
     // we'll to listen to in the client
     var servoBoard = this.devices.dsscx18s;
     init_servos( servoBoard );
+    console.log("servo's inited");
     //this.turnOn();
     /*after((2).seconds(), function() {
       this.turnOn();
@@ -60,22 +61,22 @@ Cylon.robot({
   },
 
   turnOn: function() {
-    this.led.turnOn();
+    //this.led.turnOn();
     this.emit('turned_on');
   },
 
   turnOff: function() {
-    this.led.turnOff();
+    //this.led.turnOff();
     this.emit('turned_off');
   },
 
   toggle: function() {
-    this.led.toggle();
-    if (this.led.isOn()) {
-      this.emit('turned_on');
-    } else {
-      this.emit('turned_off');
-    }
+    //this.led.toggle();
+    //if (this.led.isOn()) {
+    //  this.emit('turned_on');
+    //} else {
+    //  this.emit('turned_off');
+    //}
   },
   servoPosition: function(){
     //return servo position here
@@ -131,9 +132,6 @@ Cylon.api(
   host: '0.0.0.0',
   port: '3000'
 });
-
-Cylon.start();
-
 
 /* POSITION FUNCTIONS */
 var init_servos = function(servoBoard){
@@ -196,3 +194,6 @@ Math.easeInOutCubic = function (t, b, c, d) {
   t -= 2;
   return c/2*(t*t*t + 2) + b;
 };
+
+
+Cylon.start();
