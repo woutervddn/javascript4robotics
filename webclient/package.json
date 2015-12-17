@@ -1,0 +1,11 @@
+{
+  "name": "Javascript4RoboticsWebClient",
+  "version": "0.0.1",
+  "description": "A web project for controlling a robotic arm using javascript.",
+  "author": "Stef Paquay, Steven Stakenborg, Wouter Vandenneucker",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-slider": "5.3.2"
+  }
+}
+
